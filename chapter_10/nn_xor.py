@@ -6,7 +6,7 @@ X = np.array([[0, 0], [0, 1], [1, 0], [1, 1]])
 y = np.array([[0], [1], [1], [0]])
 
 print("[INFO] training neural network...")
-nn = NeuralNetwork([2, 2, 1], alpha=0.5)
+nn = NeuralNetwork([2, 2, 1], alpha=0.1)
 nn.fit(X, y, epochs=20000)
 
 print("[INFO] testing neural network...")

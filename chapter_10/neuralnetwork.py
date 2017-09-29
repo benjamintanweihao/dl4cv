@@ -12,7 +12,7 @@ class NeuralNetwork:
             w = np.random.randn(layers[i] + 1, layers[i + 1] + 1)
             self.W.append(w / np.sqrt(layers[i]))
 
-        w = np.random.randn(layers[-2] + 1, layers[-1] + 1)
+        w = np.random.randn(layers[-2] + 1, layers[-1])
         self.W.append(w / np.sqrt(layers[-2]))
 
     def __repr__(self):
@@ -21,7 +21,7 @@ class NeuralNetwork:
         )
 
     def sigmoid(self, x):
-        return 1.0 / (1 + np.exp(x))
+        return 1.0 / (1 + np.exp(-x))
 
     def sigmoid_deriv(self, x):
         # assume that x has already passed through the sigmoid function
@@ -65,7 +65,7 @@ class NeuralNetwork:
 
         # WEIGHT UPDATE
         for layer in np.arange(0, len(self.W)):
-            self.W[layer] += self.alpha * A[layer].T.dot(D[layer])
+            self.W[layer] += -self.alpha * A[layer].T.dot(D[layer])
 
     def predict(self, X, addBias=True):
         p = np.atleast_2d(X)
