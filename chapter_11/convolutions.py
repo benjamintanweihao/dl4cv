@@ -29,11 +29,11 @@ ap.add_argument("-i", "--image", required=True, help="path to the input image")
 args = vars(ap.parse_args())
 
 smallBlur = np.ones((7, 7), dtype="float") * (1.0 / (7 * 7))
-largeBlur = np.ones((7, 7), dtype="float") * (1.0 / (21 * 21))
+largeBlur = np.ones((21, 21), dtype="float") * (1.0 / (21 * 21))
 
 sharpen = np.array((
     [0, -1, 0],
-    [-1, -5, -1],
+    [-1, 5, -1],
     [0, -1, 0]
 ), dtype="int")
 
@@ -67,7 +67,7 @@ kernelBank = (
     ("sharpen", sharpen),
     ("laplacian", laplacian),
     ("sobel_x", sobelX),
-    ("yobel_x", sobelY),
+    ("sobel_y", sobelY),
     ("emboss", emboss))
 
 image = cv2.imread(args["image"])
@@ -78,7 +78,7 @@ for (kernelName, K) in kernelBank:
     convolveOutput = convolve(gray, K)
     opencvOutput = cv2.filter2D(gray, -1, K)
 
-    cv2.imshow("Original", gray)
+    cv2.imshow("Original", image)
     cv2.imshow("{} - convolve".format(kernelName), convolveOutput)
     cv2.imshow("{} - opencv".format(kernelName), opencvOutput)
     cv2.waitKey(0)
